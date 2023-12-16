@@ -1,0 +1,12 @@
+Vite @ 5.1.0
+React
+Javascript + SWC
+
+Spring Security 6
+Spring Web
+Spring Data JPA
+Lombok
+PostgreSQL (PostgreSQL Driver)
+
+IntelliJ
+Java
