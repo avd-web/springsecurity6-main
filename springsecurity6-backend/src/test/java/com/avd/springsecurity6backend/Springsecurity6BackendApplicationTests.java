@@ -10,4 +10,9 @@ class Springsecurity6BackendApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+	void hasUser(){
+
+	}
+
 }
