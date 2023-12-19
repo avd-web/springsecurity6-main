@@ -12,8 +12,8 @@ import org.springframework.test.context.ContextConfiguration;
 //@ContextConfiguration(classes = YourWebSecurityConfigClass.class)
 class SpringSecurity6Tests {
 
-	//BASIC TESTS
-	@Test
+    //BASIC TESTS
+    @Test
     public void winTest() {
     }
 
@@ -27,7 +27,7 @@ class SpringSecurity6Tests {
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
-	@Test
+    @Test
     @WithMockUser(username = "12", password = "pass")
     public void testInvalidUsername() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/"))
@@ -41,7 +41,7 @@ class SpringSecurity6Tests {
                 .andExpect(MockMvcResultMatchers.status().isForbidden());
     }
 
-	//TEST AUTHORIZATION
+    //TEST AUTHORIZATION
     @Test
     @WithMockUser(username = "avd", password = "pass")
     public void testAuthorization() throws Exception {
