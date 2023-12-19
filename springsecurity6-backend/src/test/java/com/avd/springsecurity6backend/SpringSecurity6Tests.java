@@ -1,4 +1,5 @@
 package com.avd.springsecurity6backend;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,17 +11,17 @@ import org.springframework.test.context.ContextConfiguration;
 
 @SpringBootTest
 //@ContextConfiguration(classes = YourWebSecurityConfigClass.class)
-class SpringSecurityTest {
+class SpringSecurity6Tests {
 
-	@Autowired
-	private MockMvc mockMvc;
+		@Autowired
+		private MockMvc mockMvc;
 
-	@Test
-	@WithMockUser(username = "validUsername", password = "validPassword")
-	public void testAuthentication() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/"))
-				.andExpect(MockMvcResultMatchers.status().isOk());
-	}
+		@Test
+		@WithMockUser(username = "validUsername", password = "validPassword")
+		public void testAuthentication() throws Exception {
+			mockMvc.perform(MockMvcRequestBuilders.get("/"))
+					.andExpect(MockMvcResultMatchers.status().isOk());
+		}
 
 //	@Test
 //	@WithMockUser(username = "UNvalidUsername", password = "validPassword")
@@ -36,10 +37,10 @@ class SpringSecurityTest {
 //				.andExpect(MockMvcResultMatchers.status().isForbidden());
 //	}
 
-	@Test
-	@WithMockUser(username = "usernameWithoutPermission", password = "validPassword")
-	public void testAuthorization() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/admin"))
-				.andExpect(MockMvcResultMatchers.status().isForbidden());
+		@Test
+		@WithMockUser(username = "usernameWithoutPermission", password = "validPassword")
+		public void testAuthorization() throws Exception {
+			mockMvc.perform(MockMvcRequestBuilders.get("/admin"))
+					.andExpect(MockMvcResultMatchers.status().isForbidden());
+		}
 	}
-}
