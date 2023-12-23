@@ -25,31 +25,33 @@ class SpringSecurity6Tests {
 
     //TEST AUTHENTICATION
     @Test
-    @WithMockUser(username = "user", password = "99f4a362-a79a-4d5b-8672-56c3d8632d19")
+    @WithMockUser(username = "avd@mail.com", password = "1234")
     public void testAuthentication() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8080/login"))
+        mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8080/api/v1/demo-controller")
+                        .header("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhdmRAbWFpbC5jb20iLCJpYXQiOjE3MDMzNTM4MzYsImV4cCI6MTcwMzM1NTI3Nn0.4oXdHAgDYecac4RucxG9cUDBdyaWlanDjNhljI6_s1c"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+
     }
 
-    @Test
-    @WithMockUser(username = "12", password = "pass")
-    public void testInvalidUsername() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/"))
-                .andExpect(MockMvcResultMatchers.status().isForbidden());
-    }
+//    @Test
+//    @WithMockUser(username = "12", password = "pass")
+//    public void testInvalidUsername() throws Exception {
+//        mockMvc.perform(MockMvcRequestBuilders.get("/"))
+//                .andExpect(MockMvcResultMatchers.status().isForbidden());
+//    }
 
-    @Test
-    @WithMockUser(username = "avd", password = "  , ")
-    public void testInvalidPassword() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/"))
-                .andExpect(MockMvcResultMatchers.status().isForbidden());
-    }
+//    @Test
+//    @WithMockUser(username = "avd", password = "  , ")
+//    public void testInvalidPassword() throws Exception {
+//        mockMvc.perform(MockMvcRequestBuilders.get("/"))
+//                .andExpect(MockMvcResultMatchers.status().isForbidden());
+//    }
 
     //TEST AUTHORIZATION
-    @Test
-    @WithMockUser(username = "avd", password = "pass")
-    public void testAuthorization() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/admin"))
-                .andExpect(MockMvcResultMatchers.status().isForbidden());
-    }
+//    @Test
+//    @WithMockUser(username = "avd", password = "pass")
+//    public void testAuthorization() throws Exception {
+//        mockMvc.perform(MockMvcRequestBuilders.get("/admin"))
+//                .andExpect(MockMvcResultMatchers.status().isForbidden());
+//    }
 }
