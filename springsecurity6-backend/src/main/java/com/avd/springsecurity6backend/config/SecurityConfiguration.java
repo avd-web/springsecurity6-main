@@ -27,7 +27,9 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/**")
+                        //antMatchers() = Deprecated
                         .permitAll()
+                        .requestMatchers("api/v1/admin-demo/**").hasRole("ADMIN")
                         .anyRequest()
                         .authenticated())
                 .sessionManagement(session -> session
