@@ -1,5 +1,6 @@
 package com.avd.springsecurity6backend.config;
 
+import com.avd.springsecurity6backend.user.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,13 +26,13 @@ public class SecurityConfiguration {
         http
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/**")
+                .authorizeHttpRequests(
+                        auth -> {
+                            auth.requestMatchers("/api/v1/admin-demo/**").hasRole(Role.ADMIN.name());
+                            auth.requestMatchers("/api/v1/auth/**").permitAll();
+                            auth.requestMatchers("/").permitAll();
                         //antMatchers() = Deprecated
-                        .permitAll()
-                        .requestMatchers("api/v1/admin-demo/**").hasRole("ADMIN")
-                        .anyRequest()
-                        .authenticated())
+                        auth.anyRequest().authenticated();})
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
