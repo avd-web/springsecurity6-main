@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
@@ -33,6 +34,28 @@ class SpringSecurity6Tests {
     @Autowired
     private MockMvc mvc;
 
+    @Test
+    public void testRegistrationAndAuthentication() throws Exception {
+        // Register a new user
+        this.mvc.perform(post("/api/v1/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"email\":\"admin@mail.com\", \"password\":\"admin\"}"))
+                .andExpect(status().isOk());
+
+        // Authenticate the new user
+//        this.mvc.perform(post("/api/v1/auth/authenticate")
+//                        .with(httpBasic("admin@mail.com", "admin"))
+//                        .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk());
+
+        this.mvc.perform(post("/api/v1/auth/authenticate")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"email\":\"admin@mail.com\", \"password\":\"admin\"}"))
+                .andExpect(status().isOk());
+    }
+
+
+
     //TEST AUTHENTICATION
 //    @Test
 //    @WithMockUser(username = "avd@mail.com", password = "1234")
@@ -53,11 +76,12 @@ class SpringSecurity6Tests {
 //
 //    }
 
-    @Test
-    public void testWithHttpBasic() throws Exception {
-        this.mvc.perform(post("http://localhost:8080/api/v1/auth/authenticate").with(httpBasic("admin@mail.com", "admin")))
-                .andExpect(status().isOk());
-    }
+//    @Test
+//    public void testWithHttpBasic() throws Exception {
+//        this.mvc.perform(post("http://localhost:8080/api/v1/auth/authenticate").with(httpBasic("admin@mail.com", "admin")))
+//                .andExpect(status().isOk());
+//    }
+
 
 
 
