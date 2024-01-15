@@ -19,6 +19,41 @@ import java.util.List;
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 public class TokenRepositoryTest {
 
+    //Arrange testable input-values for user1
+    String TestEmail = "user@mail.com";
+    String TestFirstname = "userFirstname";
+    String TestLastname = "userLastname";
+    String TestPassword = "password";
+    Role TestRole = Role.USER;
+
+    //Arrange test input for user2
+    String TestEmail2 = "user2@mail.com";
+    String TestFirstname2 = "user2Firstname";
+    String TestLastname2 = "user2Lastname";
+    String TestPassword2 = "password";
+    Role TestRole2 = Role.USER;
+
+    //Arrange building a testable: user1
+    User user1 = User.builder()
+            .username(TestEmail)
+            .firstname(TestFirstname)
+            .lastname(TestLastname)
+            .password(TestPassword)
+            .role(TestRole)
+            .build();
+
+    //Arrange building testUser2
+    User user2 = User.builder()
+            .username(TestEmail2)
+            .firstname(TestFirstname2)
+            .lastname(TestLastname2)
+            .password(TestPassword2)
+            .role(TestRole2)
+            .build();
+
+    //Arrange building token with user1
+    Token token = Token.builder().user(user1).build();
+
     @Autowired
     private UserRepository userRepository;
 
@@ -32,25 +67,15 @@ public class TokenRepositoryTest {
     @Test
     public void TokenRepository_SaveToken_ReturnSavedToken() {
 
-        //Arrange
-        User user = User.builder()
-                .username("user@mail.com")
-                .firstname("user").lastname("user")
-                .password("password")
-                .role(Role.USER)
-                .build();
-
-        Token token = Token.builder().user(user).build();
-
         //Act
-        userRepository.save(user);
+        userRepository.save(user1);
         Token savedToken = tokenRepository.save(token);
 
         //Assert
         Assertions.assertThat(savedToken).isNotNull();
         Assertions.assertThat(savedToken.expired).isFalse();
         Assertions.assertThat(savedToken.revoked).isFalse();
-        Assertions.assertThat(savedToken.user.getUsername()).isEqualTo("user@mail.com");
+        Assertions.assertThat(savedToken.user.getUsername()).isEqualTo(TestEmail);
     }
 
     @Test
@@ -68,30 +93,15 @@ public class TokenRepositoryTest {
     public void TokenRepository_FindAllValidTokenByUser_ReturnToken() {
 
         //Arrange
-        User user1 = User.builder()
-                .username("user1@mail.com")
-                .firstname("user1").lastname("user")
-                .password("password")
-                .role(Role.USER)
-                .build();
-
-        User user2 = User.builder()
-                .username("user2@mail.com")
-                .firstname("user2").lastname("user")
-                .password("password")
-                .role(Role.USER)
-                .build();
+        Token token2 = Token.builder().user(user1).build();
+        Token token3 = Token.builder().user(user1).build();
+        Token token4 = Token.builder().user(user2).build(); //create a different token using user2
 
         //Act
         userRepository.save(user1);
         userRepository.save(user2);
 
-        Token token1 = Token.builder().user(user1).build();
-        Token token2 = Token.builder().user(user1).build();
-        Token token3 = Token.builder().user(user1).build();
-        Token token4 = Token.builder().user(user2).build(); //create a 2nd, different user.
-
-        tokenRepository.save(token1);
+        tokenRepository.save(token);
         tokenRepository.save(token2);
         tokenRepository.save(token3);
         tokenRepository.save(token4);

@@ -18,44 +18,60 @@ import java.util.Optional;
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 public class UserRepositoryTest {
 
+    //Arrange test input for user1
+    String TestEmail = "user@mail.com";
+    String TestFirstname = "userFirstname";
+    String TestLastname = "userLastname";
+    String TestPassword = "password";
+    Role TestRole = Role.USER;
+
+    //Arrange test input for user2
+    String TestEmail2 = "user2@mail.com";
+    String TestFirstname2 = "user2Firstname";
+    String TestLastname2 = "user2Lastname";
+    String TestPassword2 = "password";
+    Role TestRole2 = Role.USER;
+
+    //Arrange building testUser1
+    User user1 = User.builder()
+            .username(TestEmail)
+            .firstname(TestFirstname)
+            .lastname(TestLastname)
+            .password(TestPassword)
+            .role(TestRole)
+            .build();
+
+    //Arrange building testUser2
+    User user2 = User.builder()
+            .username(TestEmail2)
+            .firstname(TestFirstname2)
+            .lastname(TestLastname2)
+            .password(TestPassword2)
+            .role(TestRole2)
+            .build();
+
     @Autowired
     private UserRepository userRepository;
 
     @Test
     public void UserRepository_SaveAll_ReturnSavedUser() {
 
-        //Arrange
-        User user = User.builder()
-                .username("user@mail.com")
-                .firstname("user").lastname("user")
-                .password("password")
-                .role(Role.USER)
-                .build();
-
         //Act
-        User savedUser = userRepository.save(user);
+        User savedUser = userRepository.save(user1);
 
         //Assert
         Assertions.assertThat(savedUser).isNotNull();
         Assertions.assertThat(savedUser.getId()).isGreaterThan(0);
+        Assertions.assertThat(savedUser.getUsername()).isEqualTo(TestEmail);
+        Assertions.assertThat(savedUser.getFirstname()).isEqualTo(TestFirstname);
+        Assertions.assertThat(savedUser.getLastname()).isEqualTo(TestLastname);
+        Assertions.assertThat(savedUser.getPassword()).isEqualTo(TestPassword);
+        Assertions.assertThat(savedUser.getRole()).isEqualTo(TestRole);
+
     }
 
     @Test
     public void UserRepository_GetAll_ReturnMoreThenOneUser(){
-
-        //Arrange
-        User user1 = User.builder()
-                .username("user@mail.com")
-                .firstname("user").lastname("user")
-                .password("password")
-                .role(Role.USER)
-                .build();
-        User user2 = User.builder()
-                .username("user2@mail.com")
-                .firstname("user2").lastname("user")
-                .password("password")
-                .role(Role.USER)
-                .build();
 
         //Act
         userRepository.save(user1);
@@ -70,18 +86,9 @@ public class UserRepositoryTest {
     @Test
     public void UserRepository_FindById_ReturnUser(){
 
-        //Arrange
-        User user = User.builder()
-                .username("user@mail.com")
-                .firstname("user").lastname("user")
-                .password("password")
-                .role(Role.USER)
-                .build();
-
-        userRepository.save(user);
-
         //Act
-        User userList = userRepository.findById(user.getId()).stream().findFirst().orElse(null);
+        userRepository.save(user1);
+        User userList = userRepository.findById(user1.getId()).stream().findFirst().orElse(null);
 
         //Assert
         Assertions.assertThat(userList).isNotNull();
@@ -90,17 +97,8 @@ public class UserRepositoryTest {
     @Test
     public void UserRepository_FindByRole_ReturnUserNotNull(){
 
-        //Arrange
-        User user = User.builder()
-                .username("user@mail.com")
-                .firstname("user").lastname("user")
-                .password("password")
-                .role(Role.USER)
-                .build();
-
-        userRepository.save(user);
-
         //Act
+        userRepository.save(user1);
         User userList = userRepository.findByRole(Role.USER).stream().findFirst().orElse(null);
 
         //Assert
@@ -109,20 +107,6 @@ public class UserRepositoryTest {
 
     @Test
     public void UserRepository_FindByRole_Return2Users(){
-
-        //Arrange
-        User user1 = User.builder()
-                .username("user@mail.com")
-                .firstname("user").lastname("user")
-                .password("password")
-                .role(Role.USER)
-                .build();
-        User user2 = User.builder()
-                .username("user2@mail.com")
-                .firstname("user2").lastname("user")
-                .password("password")
-                .role(Role.USER)
-                .build();
 
         //Act
         userRepository.save(user1);
@@ -137,18 +121,10 @@ public class UserRepositoryTest {
     @Test
     public void UserRepository_UpdateUser_ReturnChangedUser(){
 
-        //Arrange
-        User user = User.builder()
-                .username("user@mail.com")
-                .firstname("user").lastname("user")
-                .password("password")
-                .role(Role.USER)
-                .build();
-
         //Act
-        userRepository.save(user);
+        userRepository.save(user1);
 
-        User userSaved = userRepository.findById(user.getId()).stream().findFirst().orElse(null);
+        User userSaved = userRepository.findById(user1.getId()).stream().findFirst().orElse(null);
         assert userSaved != null;
         userSaved.setPassword("changedPassword");
         userSaved.setUsername("changedUser@mail.com");
@@ -168,18 +144,10 @@ public class UserRepositoryTest {
     @Test
     public void UserRepository_UserDelete_ReturnUserIsEmpty(){
 
-        //Arrange
-        User user = User.builder()
-                .username("user@mail.com")
-                .firstname("user").lastname("user")
-                .password("password")
-                .role(Role.USER)
-                .build();
-
         //Act
-        userRepository.save(user);
-        userRepository.deleteById(user.getId());
-        Optional<User> userReturn = userRepository.findById(user.getId());
+        userRepository.save(user1);
+        userRepository.deleteById(user1.getId());
+        Optional<User> userReturn = userRepository.findById(user1.getId());
 
         //Assert
         Assertions.assertThat(userReturn).isEmpty();
