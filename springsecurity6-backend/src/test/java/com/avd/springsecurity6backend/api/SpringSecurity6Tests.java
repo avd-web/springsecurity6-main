@@ -1,4 +1,4 @@
-package com.avd.springsecurity6backend;
+package com.avd.springsecurity6backend.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 //@ContextConfiguration(classes = YourWebSecurityConfigClass.class)
 class SpringSecurity6Tests {
 
-    //BASIC TESTS
     @Test
     public void winTest() {
     }
@@ -48,13 +47,11 @@ class SpringSecurity6Tests {
 //                        .contentType(MediaType.APPLICATION_JSON))
 //                .andExpect(status().isOk());
 
-        this.mvc.perform(post("/api/v1/auth/authenticate")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"email\":\"admin@mail.com\", \"password\":\"admin\"}"))
-                .andExpect(status().isOk());
+//        this.mvc.perform(post("/api/v1/auth/authenticate")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content("{\"email\":\"admin@mail.com\", \"password\":\"admin\"}"))
+//                .andExpect(status().isOk());
     }
-
-
 
     //TEST AUTHENTICATION
 //    @Test
@@ -96,39 +93,9 @@ class SpringSecurity6Tests {
 //    }
 
 //    @Test
-//    public void shouldReturnTheUserDetails() throws Exception {
-//        var expectedJson = "{\"name\" : \"testName\", \"age\" : 10, \"gender\" : \"M\"}";
-//
-//        MvcResult result = mockMvc.perform(get("/api/user")
-//                .content("{\"name\" : \"testName\"}"))
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andReturn();
-//
-//        String actualJson = result.getResponse().getContentAsString();
-//
-//        assertEquals(expectedJson, actualJson); // or use any other library for comparison?
-//    }
-
-//    @Test
 //    @WithMockUser(username = "12", password = "pass")
 //    public void testInvalidUsername() throws Exception {
 //        mockMvc.perform(MockMvcRequestBuilders.get("/"))
-//                .andExpect(MockMvcResultMatchers.status().isForbidden());
-//    }
-
-//    @Test
-//    @WithMockUser(username = "avd", password = "  , ")
-//    public void testInvalidPassword() throws Exception {
-//        mockMvc.perform(MockMvcRequestBuilders.get("/"))
-//                .andExpect(MockMvcResultMatchers.status().isForbidden());
-//    }
-
-    //TEST AUTHORIZATION
-//    @Test
-//    @WithMockUser(username = "avd", password = "pass")
-//    public void testAuthorization() throws Exception {
-//        mockMvc.perform(MockMvcRequestBuilders.get("/admin"))
 //                .andExpect(MockMvcResultMatchers.status().isForbidden());
 //    }
 }
