@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
+import java.util.Optional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
@@ -81,11 +82,12 @@ public class TokenRepositoryTest {
     @Test
     public void TokenRepository_FindByToken_ReturnUser() {
 
-        //Arrange
-
         //Act
+        userRepository.save(user1);
+        Token savedToken = tokenRepository.save(token);
 
         //Assert
+        Assertions.assertThat(tokenRepository.findByToken(savedToken.token)).isNotNull();
 
     }
 
