@@ -54,7 +54,7 @@ public class UserRepositoryTest {
     private UserRepository userRepository;
 
     @Test
-    public void UserRepository_SaveAll_ReturnSavedUser() {
+    public void UserRepository_Save_ReturnSavedUser() {
 
         //Act
         User savedUser = userRepository.save(user1);
