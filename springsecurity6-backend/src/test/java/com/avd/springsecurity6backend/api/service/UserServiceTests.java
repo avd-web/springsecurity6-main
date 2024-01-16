@@ -28,7 +28,7 @@ class UserServiceTests {
     private UserService userService;
 
     @Test
-    void changePassword() {
+    void UserService_ChangePassword_ReturnChangedPassword() {
 
         //Arrange user1 and password
         final User user1 = TestUtil.createMockUser1();
