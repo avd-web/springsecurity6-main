@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-public class UserRepositoryTest {
+public class UserRepositoryTests {
 
     private final User user1 = TestUtil.createMockUser1();
     private final User user2 = TestUtil.createMockUser2();

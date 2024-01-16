@@ -11,13 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 //@ContextConfiguration(classes = YourWebSecurityConfigClass.class)
 class SpringSecurity6Tests {
-
-    @Autowired
-    private MockMvc mvc;
-
-    @Test
-    public void RunAllTests() throws Exception {
-    }
 }
 
         // Register a new user

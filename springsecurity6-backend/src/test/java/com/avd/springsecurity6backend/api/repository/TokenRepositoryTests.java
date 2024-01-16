@@ -4,7 +4,6 @@ import com.avd.springsecurity6backend.api.TestUtil;
 import com.avd.springsecurity6backend.token.Token;
 import com.avd.springsecurity6backend.token.TokenRepository;
 //import org.junit.jupiter.api.Assertions;
-import com.avd.springsecurity6backend.user.Role;
 import com.avd.springsecurity6backend.user.User;
 import com.avd.springsecurity6backend.user.UserRepository;
 import org.assertj.core.api.Assertions;
@@ -15,11 +14,10 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
-import java.util.Optional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-public class TokenRepositoryTest {
+public class TokenRepositoryTests {
 
     private final User user1 = TestUtil.createMockUser1();
     private final User user2 = TestUtil.createMockUser2();
@@ -31,7 +29,7 @@ public class TokenRepositoryTest {
     private TokenRepository tokenRepository;
 
     @Autowired
-    public TokenRepositoryTest(TokenRepository tokenRepository) {
+    public TokenRepositoryTests(TokenRepository tokenRepository) {
         this.tokenRepository = tokenRepository;
     }
 
