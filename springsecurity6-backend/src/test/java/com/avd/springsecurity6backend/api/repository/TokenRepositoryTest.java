@@ -27,7 +27,7 @@ public class TokenRepositoryTest {
     String TestPassword = "password";
     Role TestRole = Role.USER;
 
-    //Arrange test input for user2
+    //Arrange testable input-values for user2
     String TestEmail2 = "user2@mail.com";
     String TestFirstname2 = "user2Firstname";
     String TestLastname2 = "user2Lastname";
@@ -111,7 +111,6 @@ public class TokenRepositoryTest {
 
         //Assert
         Assertions.assertThat(userRepository.findAll().size()).isEqualTo(2);
-        Assertions.assertThat(tokenList).isNotNull();
         Assertions.assertThat(tokenList).isNotNull();
         Assertions.assertThat(tokenList.size()).isEqualTo(3);
 
