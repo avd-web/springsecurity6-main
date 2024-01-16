@@ -1,5 +1,6 @@
 package com.avd.springsecurity6backend.api.service;
 
+import com.avd.springsecurity6backend.api.TestUtil;
 import com.avd.springsecurity6backend.user.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class UserServiceTest {
+class UserServiceTests {
 
     @Mock
     private PasswordEncoder passwordEncoder;
@@ -29,23 +30,8 @@ class UserServiceTest {
     @Test
     void changePassword() {
 
-        //Arrange test input for user1
-        String TestEmail = "user@mail.com";
-        String TestFirstname = "userFirstname";
-        String TestLastname = "userLastname";
-        String TestPassword = "password";
-        Role TestRole = Role.USER;
-
-        //Arrange building testUser1
-        User user1 = User.builder()
-                .username(TestEmail)
-                .firstname(TestFirstname)
-                .lastname(TestLastname)
-                .password(TestPassword)
-                .role(TestRole)
-                .build();
-
-        //Arrange password
+        //Arrange user1 and password
+        final User user1 = TestUtil.createMockUser1();
         String currentPassword = "currentPassword";
         String newPassword = "newPassword";
         String encodedPassword = "encodedPassword";

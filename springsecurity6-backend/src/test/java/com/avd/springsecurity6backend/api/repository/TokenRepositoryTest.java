@@ -1,5 +1,6 @@
 package com.avd.springsecurity6backend.api.repository;
 
+import com.avd.springsecurity6backend.api.TestUtil;
 import com.avd.springsecurity6backend.token.Token;
 import com.avd.springsecurity6backend.token.TokenRepository;
 //import org.junit.jupiter.api.Assertions;
@@ -20,40 +21,9 @@ import java.util.Optional;
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 public class TokenRepositoryTest {
 
-    //Arrange testable input-values for user1
-    String TestEmail = "user@mail.com";
-    String TestFirstname = "userFirstname";
-    String TestLastname = "userLastname";
-    String TestPassword = "password";
-    Role TestRole = Role.USER;
-
-    //Arrange testable input-values for user2
-    String TestEmail2 = "user2@mail.com";
-    String TestFirstname2 = "user2Firstname";
-    String TestLastname2 = "user2Lastname";
-    String TestPassword2 = "password";
-    Role TestRole2 = Role.USER;
-
-    //Arrange building a testable: user1
-    User user1 = User.builder()
-            .username(TestEmail)
-            .firstname(TestFirstname)
-            .lastname(TestLastname)
-            .password(TestPassword)
-            .role(TestRole)
-            .build();
-
-    //Arrange building testUser2
-    User user2 = User.builder()
-            .username(TestEmail2)
-            .firstname(TestFirstname2)
-            .lastname(TestLastname2)
-            .password(TestPassword2)
-            .role(TestRole2)
-            .build();
-
-    //Arrange building token with user1
-    Token token = Token.builder().user(user1).build();
+    private final User user1 = TestUtil.createMockUser1();
+    private final User user2 = TestUtil.createMockUser2();
+    private final Token token = Token.builder().user(user1).build();
 
     @Autowired
     private UserRepository userRepository;
@@ -76,7 +46,7 @@ public class TokenRepositoryTest {
         Assertions.assertThat(savedToken).isNotNull();
         Assertions.assertThat(savedToken.expired).isFalse();
         Assertions.assertThat(savedToken.revoked).isFalse();
-        Assertions.assertThat(savedToken.user.getUsername()).isEqualTo(TestEmail);
+        Assertions.assertThat(savedToken.user.getUsername()).isEqualTo(user1.getUsername());
     }
 
     @Test
