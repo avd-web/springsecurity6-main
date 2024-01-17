@@ -21,7 +21,7 @@ import java.util.Optional;
 public class UserRepositoryTests {
 
     private final User user1 = TestUtil.createMockUser1();
-    private final User user2 = TestUtil.createMockUser2();
+    private final User user2 = TestUtil.createMockUser1();
     private final Token token = Token.builder().user(user1).build();
 
     @Autowired
