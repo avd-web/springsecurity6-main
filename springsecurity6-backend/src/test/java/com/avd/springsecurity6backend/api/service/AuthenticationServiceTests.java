@@ -9,6 +9,11 @@ import com.avd.springsecurity6backend.config.JwtService;
 import com.avd.springsecurity6backend.token.TokenRepository;
 import com.avd.springsecurity6backend.user.User;
 import com.avd.springsecurity6backend.user.UserRepository;
+import com.google.common.net.HttpHeaders;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.WriteListener;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,6 +22,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -96,6 +103,53 @@ class AuthenticationServiceTests {
         // Assert
         assertEquals("jwtToken", response.getAccessToken());
         assertEquals("refreshToken", response.getRefreshToken());
+    }
+
+    @Test
+    public void testRefreshToken() throws IOException {
+        // Arrange
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+        String authHeader = "Bearer jwtToken";
+
+        when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(authHeader);
+
+        User user = new User();
+        user.setUsername("johndoe");
+        user.setPassword("password");
+
+        when(jwtService.extractUsername(authHeader.substring(7))).thenReturn(user.getUsername());
+        when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
+        when(jwtService.isTokenValid(authHeader.substring(7), user)).thenReturn(true);
+        when(jwtService.generateToken(user)).thenReturn("newJwtToken");
+
+        // Create a ByteArrayOutputStream and a ServletOutputStream that writes to it
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ServletOutputStream servletOutputStream = new ServletOutputStream() {
+            @Override
+            public boolean isReady() {
+                return false;
+            }
+
+            @Override
+            public void setWriteListener(WriteListener writeListener) {
+
+            }
+
+            @Override
+            public void write(int b) throws IOException {
+                byteArrayOutputStream.write(b);
+            }
+        };
+
+        when(response.getOutputStream()).thenReturn(servletOutputStream);
+
+        // Act
+        authenticationService.refreshToken(request, response);
+
+        // Assert
+        String responseOutput = byteArrayOutputStream.toString();
+        assertTrue(responseOutput.contains("newJwtToken"));
     }
 
 
