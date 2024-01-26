@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class TestUtil {
 
     public static User createMockUser1() {
+
         //Arrange ->
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder() {};
         //Arrange testable input-values for user1
@@ -24,5 +25,26 @@ public class TestUtil {
                 .password(passwordEncoder.encode(TestPassword))
                 .role(TestRole)
                 .build();
+    }
+
+    public static User createMockAdmin1() {
+
+        //Arrange ->
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder() {};
+        //Arrange testable input-values for user1
+        String TestEmail = "admin1@mail.com";
+        String TestFirstname = "admin1Firstname";
+        String TestLastname = "admin1Lastname";
+        String TestPassword = "password1";
+        Role TestRole = Role.ADMIN;
+        //Return User object via builder
+        return User.builder()
+                .username(TestEmail)
+                .firstname(TestFirstname)
+                .lastname(TestLastname)
+                .password(passwordEncoder.encode(TestPassword))
+                .role(TestRole)
+                .build();
+
     }
 }
