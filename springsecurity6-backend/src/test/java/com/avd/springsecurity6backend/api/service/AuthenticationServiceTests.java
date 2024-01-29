@@ -73,6 +73,9 @@ class AuthenticationServiceTests {
         userWithEncodedPassword.setPassword(encodedPassword);
         userWithEncodedPassword.setRole(request.getRole());
 
+        jwtService.generateToken(userWithEncodedPassword);
+        jwtService.generateRefreshToken(userWithEncodedPassword);
+
         when(jwtService.generateToken(userWithEncodedPassword)).thenReturn("jwtToken");
         when(jwtService.generateRefreshToken(userWithEncodedPassword)).thenReturn("refreshToken");
 
