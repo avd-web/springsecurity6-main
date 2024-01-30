@@ -69,3 +69,33 @@ class SecurityConfigurationIntegrationTest {
     }
     }
 
+//@SpringBootTest
+//@ActiveProfiles("test")
+//public class JwtAuthenticationTest {
+//
+//    @Autowired
+//    private JwtTokenProvider jwtTokenProvider;
+//
+//    @MockBean
+//    private MyUserDetailsService myUserDetailsService;
+//
+//    @Test
+//    @WithMockUser(username = "testUser", roles = {"USER"})
+//    public void testJwtAuthentication() {
+//        // Mock the loadUserByUsername method
+//        when(myUserDetailsService.loadUserByUsername("testUser"))
+//                .thenReturn(new User("testUser", "testPassword", new ArrayList<>()));
+//
+//        // Generate a token for the mock user
+//        String token = jwtTokenProvider.createToken("testUser", List.of("ROLE_USER"));
+//
+//        // Validate the token
+//        boolean isValid = jwtTokenProvider.validateToken(token);
+//        assertThat(isValid).isTrue();
+//
+//        // Get the username from the token
+//        String username = jwtTokenProvider.getUsername(token);
+//        assertThat(username).isEqualTo("testUser");
+//    }
+//}
+
