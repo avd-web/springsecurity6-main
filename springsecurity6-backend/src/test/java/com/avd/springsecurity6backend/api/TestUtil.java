@@ -9,6 +9,8 @@ public class TestUtil {
 
     public static User createMockUser1() {
 
+        //ADD PASSWORD ENCODER?
+
         //Arrange ->
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder() {};
         //Arrange testable input-values for user1

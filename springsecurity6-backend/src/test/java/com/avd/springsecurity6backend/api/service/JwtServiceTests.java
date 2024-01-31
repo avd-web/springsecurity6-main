@@ -4,6 +4,8 @@ import com.avd.springsecurity6backend.api.TestUtil;
 import com.avd.springsecurity6backend.auth.RegisterRequest;
 import com.avd.springsecurity6backend.config.JwtService;
 import com.avd.springsecurity6backend.user.Role;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,25 +24,53 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 public class JwtServiceTests {
 
+    private User mockUser;
+    private String username;
+
+
+    @BeforeEach
+    private void setupUser() {
+
+        mockUser = TestUtil.createMockUser1();
+        username = mockUser.getUsername();
+
+    }
+
     @Autowired
     private JwtService jwtService;
 
-//    @MockBean
-//    private UserDetails userDetails;
+    @Test
+    public void testExtractUsername() {
 
-//    @Mock
-//    private PasswordEncoder passwordEncoder;
+    }
+
+    @Test
+    public void testExtractClaim() {
+
+    }
 
     @Test
     public void testGenerateToken() {
 
-        User mockUser = TestUtil.createMockUser1();
-        String username = mockUser.getUsername();
 
         String token = jwtService.generateToken(mockUser);
+        //ALSO ADD OVERLOADED GENERATE TOKEN FUNCTION?
+
         assertNotNull(token);
         assertEquals(username, jwtService.extractUsername(token));
+
     }
+
+    @Test
+    public void testGenerateRefreshToken() {
+
+    }
+
+    @Test
+    public void testIsTokenExpired() {
+
+    }
+
 
 //    @Test
 //    public void testIsTokenValid() {
