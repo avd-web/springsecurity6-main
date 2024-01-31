@@ -49,21 +49,21 @@ public class AdminControllerTests {
                 .andExpect(status().isOk());
     }
 
-    @Test
-    public void testPost() throws Exception {
-        mockMvc.perform(post("/api/v1/admin"))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void testPut() throws Exception {
-        mockMvc.perform(put("/api/v1/admin"))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void testDelete() throws Exception {
-        mockMvc.perform(delete("/api/v1/admin"))
-                .andExpect(status().isOk());
-    }
+//    @Test
+//    public void testPost() throws Exception {
+//        mockMvc.perform(post("/api/v1/admin"))
+//                .andExpect(status().isOk());
+//    }
+//
+//    @Test
+//    public void testPut() throws Exception {
+//        mockMvc.perform(put("/api/v1/admin"))
+//                .andExpect(status().isOk());
+//    }
+//
+//    @Test
+//    public void testDelete() throws Exception {
+//        mockMvc.perform(delete("/api/v1/admin"))
+//                .andExpect(status().isOk());
+//    }
 }

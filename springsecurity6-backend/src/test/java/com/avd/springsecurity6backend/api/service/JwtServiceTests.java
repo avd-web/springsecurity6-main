@@ -10,13 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.avd.springsecurity6backend.user.User;
 import io.jsonwebtoken.Claims;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class JwtServiceTests {
 
     private User mockUser;

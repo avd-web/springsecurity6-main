@@ -20,6 +20,7 @@ import static org.mockito.ArgumentMatchers.any;
 //TODO: Try to remove @AUTOWIRED?
 //TODO: Check dependency versions and H2 Database version (why is it not the latest?)
 //TODO: What is/was the github dependency vulnerability (automatic) error, did it have anything to do with the H2 db version?
+//TODO: PROBLEM: users can be registered without any check, so only a password is enough to register?
 
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;

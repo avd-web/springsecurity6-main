@@ -46,8 +46,8 @@ public class LogoutServiceTests {
 
         Token token = new Token();
         token.setToken(authHeader.substring(7));
-        token.setExpired(false);
-        token.setRevoked(false);
+//        token.setExpired(false);
+//        token.setRevoked(false);
 
         when(tokenRepository.findByToken(authHeader.substring(7))).thenReturn(Optional.of(token));
 
