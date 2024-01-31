@@ -1,5 +1,6 @@
 package com.avd.springsecurity6backend.api.service;
 
+import com.avd.springsecurity6backend.api.TestUtil;
 import com.avd.springsecurity6backend.auth.RegisterRequest;
 import com.avd.springsecurity6backend.config.JwtService;
 import com.avd.springsecurity6backend.user.Role;
@@ -32,16 +33,9 @@ public class JwtServiceTests {
 
     @Test
     public void testGenerateToken() {
-        String username = "john.doe";
 
-        RegisterRequest registerRequest = new RegisterRequest("John", "Doe", "john.doe", "password", Role.USER);
-        User mockUser = User.builder()
-                .firstname(registerRequest.getFirstname())
-                .lastname(registerRequest.getLastname())
-                .username(registerRequest.getUsername())
-                .password("encodedPassword") // Mocking encoded password
-                .role(registerRequest.getRole())
-                .build();
+        User mockUser = TestUtil.createMockUser1();
+        String username = mockUser.getUsername();
 
         String token = jwtService.generateToken(mockUser);
         assertNotNull(token);
