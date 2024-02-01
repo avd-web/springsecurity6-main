@@ -21,6 +21,7 @@ import java.security.Principal;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
@@ -49,7 +50,7 @@ public class UserControllerTest {
         // Arrange
         String requestJson = "{ \"oldPassword\": \"oldPassword\", \"newPassword\": \"newPassword\" }";
         // Act & Assert
-        mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/users").contentType(MediaType.APPLICATION_JSON).content(requestJson)).andExpect(status().isOk());
+        mockMvc.perform(patch("/api/v1/users").contentType(MediaType.APPLICATION_JSON).content(requestJson)).andExpect(status().isOk());
         // Verify that the service method was called
         verify(userService).changePassword(any(ChangePasswordRequest.class), any(Principal.class));
     }

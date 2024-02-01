@@ -17,7 +17,7 @@ public class TestUtil {
         String TestPassword = passwordEncoder.encode("password");
         Role TestRole = Role.USER;
         //Return User object via builder
-        return User.builder().username(TestEmail).firstname(TestFirstname).lastname(TestLastname).password(passwordEncoder.encode(TestPassword)).role(TestRole).build();
+        return User.builder().username(TestEmail).firstname(TestFirstname).lastname(TestLastname).password(TestPassword).role(TestRole).build();
     }
 
     public static User createMockAdmin1() {
