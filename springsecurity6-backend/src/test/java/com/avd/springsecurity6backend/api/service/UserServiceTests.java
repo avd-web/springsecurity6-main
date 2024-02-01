@@ -9,10 +9,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.security.Principal;
 
 import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,33 +30,26 @@ class UserServiceTests {
 
     @Test
     void UserService_ChangePassword_ReturnChangedPassword() {
-
-        //Arrange -->
+        //Arrange
         final User user1 = TestUtil.createMockUser1();
         String currentPassword = "currentPassword";
         String newPassword = "newPassword";
         String encodedPassword = "encodedPassword";
         user1.setPassword(encodedPassword);
-
         //Arrange Principal with user1 credentials
         Principal principal = new UsernamePasswordAuthenticationToken(user1, null);
-
         //Arrange build ChangePasswordRequest object
         ChangePasswordRequest request = ChangePasswordRequest.builder().build();
-
         //Arrange current, new and confirmation password
         request.setCurrentPassword(currentPassword);
         request.setNewPassword(newPassword);
         request.setConfirmationPassword(newPassword);
-
         //Arrange password check and encoding new password
         when(passwordEncoder.matches(currentPassword, encodedPassword)).thenReturn(true);
         when(passwordEncoder.encode(newPassword)).thenReturn(encodedPassword);
-
-        //Act -->
+        //Act
         userService.changePassword(request, principal);
-
-        //Assert -->
+        //Assert
         verify(passwordEncoder, times(1)).matches(currentPassword, encodedPassword);
         verify(passwordEncoder, times(1)).encode(newPassword);
         verify(repository, times(1)).save(user1);

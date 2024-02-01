@@ -5,6 +5,7 @@ import com.avd.springsecurity6backend.demo.AdminController;
 import com.avd.springsecurity6backend.token.TokenRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,6 +24,7 @@ Implementation variant 1:
 */
 
 @WebMvcTest(controllers = AdminController.class)
+@AutoConfigureMockMvc
 public class AdminControllerTests {
 
     @Autowired
@@ -39,30 +41,22 @@ public class AdminControllerTests {
 
     @Test
     public void testGet() throws Exception {
-        mockMvc.perform(get("/api/v1/admin")
-                        .with(jwt()))
-                .andExpect(status().isOk());
+        mockMvc.perform(get("/api/v1/admin").with(jwt())).andExpect(status().isOk());
     }
 
     @Test
     public void testPost() throws Exception {
-        mockMvc.perform(post("/api/v1/admin")
-                        .with(jwt()))
-                .andExpect(status().isOk());
+        mockMvc.perform(post("/api/v1/admin").with(jwt())).andExpect(status().isOk());
     }
 
     @Test
     public void testPut() throws Exception {
-        mockMvc.perform(put("/api/v1/admin")
-                        .with(jwt()))
-                .andExpect(status().isOk());
+        mockMvc.perform(put("/api/v1/admin").with(jwt())).andExpect(status().isOk());
     }
 
     @Test
     public void testDelete() throws Exception {
-        mockMvc.perform(delete("/api/v1/admin")
-                        .with(jwt().authorities(new SimpleGrantedAuthority("admin:delete"))))
-                .andExpect(status().isOk());
+        mockMvc.perform(delete("/api/v1/admin").with(jwt().authorities(new SimpleGrantedAuthority("admin:delete")))).andExpect(status().isOk());
     }
 
 //    @Test

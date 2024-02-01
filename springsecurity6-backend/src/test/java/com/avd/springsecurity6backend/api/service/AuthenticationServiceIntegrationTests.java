@@ -49,13 +49,8 @@ public class AuthenticationServiceIntegrationTests {
     void testRegister() {
         // Given
         RegisterRequest registerRequest = new RegisterRequest("John", "Doe", "john.doe", "password", Role.USER);
-        User mockUser = User.builder()
-                .firstname(registerRequest.getFirstname())
-                .lastname(registerRequest.getLastname())
-                .username(registerRequest.getUsername())
-                .password("encodedPassword") // Mocking encoded password
-                .role(registerRequest.getRole())
-                .build();
+        User mockUser = User.builder().firstname(registerRequest.getFirstname()).lastname(registerRequest.getLastname()).username(registerRequest.getUsername()).password("encodedPassword") // Mocking encoded password
+                .role(registerRequest.getRole()).build();
 
         when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
         when(userRepository.save(any(User.class))).thenReturn(mockUser);

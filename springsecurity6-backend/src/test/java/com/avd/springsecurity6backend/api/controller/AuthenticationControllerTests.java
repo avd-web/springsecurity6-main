@@ -20,11 +20,7 @@ public class AuthenticationControllerTests {
     @Test
     public void testAuthenticate() throws Exception {
         String requestBody = "{\"username\" : \"user@mail.com\", \"password\" : \"ABC123\"}";
-
-        mockMvc.perform(post("/api/v1/auth/register")
-                        .content(requestBody)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        mockMvc.perform(post("/api/v1/auth/register").content(requestBody).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 
 //        verify(authenticationService, times(1)).register(new RegisterRequest());
     }

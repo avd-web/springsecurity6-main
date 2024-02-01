@@ -47,26 +47,22 @@ public class ManagementControllerTests {
 
     @Test
     public void testGet() throws Exception {
-        mockMvc.perform(get("/api/v1/management").with(jwt()))
-                .andExpect(status().isOk());
+        mockMvc.perform(get("/api/v1/management").with(jwt())).andExpect(status().isOk());
     }
 
     @Test
     public void testPost() throws Exception {
-        mockMvc.perform(post("/api/v1/management").with(jwt()))
-                .andExpect(status().isOk());
+        mockMvc.perform(post("/api/v1/management").with(jwt())).andExpect(status().isOk());
     }
 
     @Test
     public void testPut() throws Exception {
-        mockMvc.perform(put("/api/v1/management").with(jwt()))
-                .andExpect(status().isOk());
+        mockMvc.perform(put("/api/v1/management").with(jwt())).andExpect(status().isOk());
     }
 
     @Test
     public void testDelete() throws Exception {
-        mockMvc.perform(delete("/api/v1/management").with(jwt()))
-                .andExpect(status().isOk());
+        mockMvc.perform(delete("/api/v1/management").with(jwt())).andExpect(status().isOk());
     }
 
 //    @Test
