@@ -4,7 +4,12 @@ import com.avd.springsecurity6backend.api.TestUtil;
 import com.avd.springsecurity6backend.config.JwtService;
 import com.avd.springsecurity6backend.user.User;
 import jakarta.transaction.Transactional;
+import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
@@ -13,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,15 +36,45 @@ public class AuthenticationControllerTests {
     @Autowired
     private TestEntityManager testEntityManager;
 
-    @Test
-    public void testRegister() throws Exception {
+    @ParameterizedTest
+    @ValueSource(strings = {"ABCD1234", "ABCD1234  "})
+    public void testRegister(String input) throws Exception {
 
-        String requestBody = "{\"username\" : \"user@mail.com\", \"password\" : \"ABCD1234\"}";
+        String requestBody = "{\"username\" : \"user@mail.com\", \"password\" : \""+ input + "\"}";
         mockMvc.perform(
                         post("/api/v1/auth/register")
                                 .content(requestBody)
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+//        assertTrue(Strings.isBlank(input));
+
+    }
+
+    @ParameterizedTest
+    @EmptySource
+    public void testRegister2(String input) throws Exception {
+
+        String requestBody = "{\"username\" : \"user@mail.com\", \"password\" : \""+ input + "\"}";
+        mockMvc.perform(
+                        post("/api/v1/auth/register")
+                                .content(requestBody)
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
+        assertTrue(Strings.isBlank(input));
+
+    }
+
+    @ParameterizedTest
+    @NullSource
+    public void testRegister3(String input) throws Exception {
+
+        String requestBody = "{\"username\" : \"user@mail.com\", \"password\" : \""+ input + "\"}";
+        mockMvc.perform(
+                        post("/api/v1/auth/register")
+                                .content(requestBody)
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
+        assertTrue(Strings.isBlank(input));
 
     }
 
